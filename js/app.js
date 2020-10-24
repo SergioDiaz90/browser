@@ -23,7 +23,7 @@ const dateSearch = {
 }
 //Events
 document.addEventListener('DOMContentLoaded', () =>{
-	seeCars();
+	seeCars(autos);
 	fillSelect();
 });
 
@@ -43,7 +43,10 @@ transmission.addEventListener('change', (e) => {dateSearch.transmission = e.targ
 color.addEventListener('change', (e) => {dateSearch.color = e.target.value});
 
 
-function seeCars () {
+function seeCars (autos) {
+	// Empty html
+	clearHTML();
+
 	autos.forEach(car => {
 		const carHTML = document.createElement('p');
 		const { 
@@ -73,10 +76,18 @@ function fillSelect () {
 	}
 }
 
+
+// Clear HTML
+function clearHTML() {
+	while (result.firstChild) {
+		result.removeChild(result.firstChild);
+	}
+}
 // filter for car
 function filterBrand() {
 	const result = autos.filter(oneBrand).filter(oneYear);
 	console.log(result);
+	seeCars(result);
 }
 
 function oneBrand(auto) {
@@ -94,3 +105,4 @@ function oneYear(auto) {
 	}
 	return auto;
 }
+

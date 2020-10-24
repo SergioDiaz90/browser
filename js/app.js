@@ -102,8 +102,12 @@ function filterBrand() {
 	const result = autos.filter(oneBrand).filter(
 		oneYear).filter(oneMinimum).filter(
 			oneMaximum).filter(oneDoors).filter(oneTransmission).filter(oneColor);
-	//console.log(result);
-	seeCars(result);
+	
+	if (result.length) {
+		seeCars(result);
+	} else {
+		NotFound();
+	}
 }
 
 function oneBrand(auto) {
@@ -160,4 +164,14 @@ function oneColor(auto) {
 		return auto.color === color;
 	}
 	return auto;
+}
+
+function NotFound() {
+	clearHTML();
+
+	const notFound = document.createElement('div');
+	notFound.classList.add('alerta', 'error');
+	notFound.textContent = 'No hay resultados, intenta con otro tipo de busqueda';
+
+	resultado.appendChild(notFound);
 }

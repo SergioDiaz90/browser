@@ -15,8 +15,7 @@ const result = document.querySelector('#resultado');
 const dateSearch = {
 	brand:'',
 	year:'',
-	minimum:'',
-	maximum:'',
+	price:'',
 	doors:'',
 	transmission:'',
 	color:''
@@ -36,11 +35,26 @@ year.addEventListener('change', (e) => {
 	dateSearch.year = parseInt(e.target.value);
 	filterBrand();
 });
-minimum.addEventListener('change', (e) => {dateSearch.minimum = e.target.value});
-maximum.addEventListener('change', (e) => {dateSearch.maximum = e.target.value});
-doors.addEventListener('change', (e) => {dateSearch.doors = e.target.value});
-transmission.addEventListener('change', (e) => {dateSearch.transmission = e.target.value});
-color.addEventListener('change', (e) => {dateSearch.color = e.target.value});
+minimum.addEventListener('change', (e) => {
+	dateSearch.minimum = e.target.value
+	filterBrand();
+});
+maximum.addEventListener('change', (e) => {
+	dateSearch.maximum = e.target.value
+	filterBrand();
+});
+doors.addEventListener('change', (e) => {
+	dateSearch.doors = parseInt(e.target.value);
+	filterBrand();
+});
+transmission.addEventListener('change', (e) => {
+	dateSearch.transmission = e.target.value
+	filterBrand();
+});
+color.addEventListener('change', (e) => {
+	dateSearch.color = e.target.value
+	filterBrand();
+});
 
 
 function seeCars (autos) {
@@ -85,8 +99,10 @@ function clearHTML() {
 }
 // filter for car
 function filterBrand() {
-	const result = autos.filter(oneBrand).filter(oneYear);
-	console.log(result);
+	const result = autos.filter(oneBrand).filter(
+		oneYear).filter(oneMinimum).filter(
+			oneMaximum).filter(oneDoors).filter(oneTransmission).filter(oneColor);
+	//console.log(result);
 	seeCars(result);
 }
 
@@ -106,3 +122,42 @@ function oneYear(auto) {
 	return auto;
 }
 
+function oneMinimum(auto) {
+	const { minimum } = dateSearch;
+	if (minimum) {
+		return auto.precio >= minimum;
+	}
+	return auto;
+}
+
+function oneMaximum(auto) {
+	const { maximum } = dateSearch;
+	if (maximum) {
+		return auto.precio <= maximum;
+	}
+	return auto;
+}
+
+function oneDoors(auto) {
+	const { doors } = dateSearch;
+	if (doors) {
+		return auto.puertas === doors;
+	}
+	return auto;
+}
+
+function oneTransmission(auto) {
+	const { transmission } = dateSearch;
+	if (transmission) {
+		return auto.transmision === transmission;
+	}
+	return auto;
+}
+
+function oneColor(auto) {
+	const { color } = dateSearch;
+	if (color) {
+		return auto.color === color;
+	}
+	return auto;
+}
